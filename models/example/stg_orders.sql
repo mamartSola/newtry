@@ -1,4 +1,4 @@
-create table "postgres"."public"."users"
+create table "postgres"."public"."testing_straight_local_pull"
 as (
     select
         _airbyte_emitted_at,
@@ -8,7 +8,7 @@ as (
         cast(jsonb_extract_path_text("_airbyte_data",' is') as varchar) as "date1",
         cast(jsonb_extract_path_text("_airbyte_data",' a') as varchar) as "date2"
 
-    from "postgres".public._airbyte_raw_users
+    from "postgres".public._airbyte_raw_testing_straight_local_pull
 );
 
 select * from 
