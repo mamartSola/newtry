@@ -1,4 +1,4 @@
-create  table "postgres".public."night"
+create table "postgres".public."night"
 
   as (
 
