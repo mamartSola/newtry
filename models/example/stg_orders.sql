@@ -1,23 +1,14 @@
-with source as (
-
-    {#-
-    Normally we would select from the table here, but we are using seeds to load
-    our data in this project
-    #}
-    select * from {{ ref('raw_orders') }}
-
-),
-
-renamed as (
-
+create table "postgres"."public"."users"
+as (
     select
-        id as order_id,
-        user_id as customer_id,
-        order_date,
-        status
+        _airbyte_emitted_at,
+        (current_timestamp at time zone 'utc')::timestamp as _airbyte_normalized_at,
 
-    from source
+        cast(jsonb_extract_path_text("_airbyte_data",'this') as varchar) as "key",
+        cast(jsonb_extract_path_text("_airbyte_data",' is') as varchar) as "date1",
+        cast(jsonb_extract_path_text("_airbyte_data",' a') as varchar) as "date2"
 
-)
+    from "postgres".public._airbyte_raw_users
+);
 
-select * from renamed
+select * from 
