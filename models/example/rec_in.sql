@@ -1,25 +1,22 @@
 {{ config(materialized='view') }}
 
+with datablob as (
 
-with basics as (
+    select -- pick out the nested json object from our blob
 
-    select -- what we pick out from the normalization
-
-        cast(json_extract_path_text("_airbyte_data"::json,'_airbyte_ab_id') as varchar) as "uid3",
         cast(json_extract_path_text("_airbyte_data"::json,'_airbyte_data') as varchar) as "thisobj"
 
-    from public._airbyte_raw_pullusers -- whats created automatcally, with normalization
+    from public._airbyte_raw_recondata -- created automatcally, no normalization
 ),
 
 pluck as(
 
-    select
+    select -- extract key:value pairs from nested json object - reconstitute initial data present in "public.users"
 
-        uid3,
-        cast(json_extract_path_text("thisobj"::json,'id') as varchar) as "objid",
-        cast(json_extract_path_text("thisobj"::json,'col1') as varchar) as "column"
+        cast(json_extract_path_text("thisobj"::json,'id') as varchar) as "our init id",
+        cast(json_extract_path_text("thisobj"::json,'col1') as varchar) as "our init column"
 
-    from basics
+    from datablob
 )
 
 select * from pluck
