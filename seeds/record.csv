@@ -1,0 +1,4 @@
+_airbyte_ab_id,_airbyte_emitted_at,_airbyte_data
+68bd063c-98ed-4a51-88ef-09c5873582e6,168,"{""id"":1,""col1"":""record1""}"
+5456d051-eb44-4587-b990-5fe819a28b05,168,"{""id"":2,""col1"":""record2""}"
+0b1f9098-424e-4361-9729-01138caca1d7,168,"{""id"":3,""col1"":""record3""}"
